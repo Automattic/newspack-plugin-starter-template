@@ -6,7 +6,7 @@
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"setup": "npm install && composer install",
+		"setup": "npm install && composer install && npx husky init && echo \"npm run lint\" > .husky/pre-commit",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
