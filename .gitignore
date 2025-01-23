@@ -3,3 +3,5 @@ vendor
 build
 .DS_Store
 .vscode
+composer.lock
+package-lock.json
