@@ -15,6 +15,6 @@ It will give you all of the tools you needs to get up and running quickly.
 ## How do I use it?
 
 1. Start by clicking the `Use this template` to use this as a starting point for your project.
-2. In the Secrets and Variables->Actions under the Settings menu of the new repository. Create new `SFTP_USER` and `SFTP_PASSWORD` secrets and add the credentials provided by NewPack for each.
+2. In the Secrets and Variables->Actions under the Settings menu of the new repository. Create new `SFTP_USER` and `SFTP_PASSWORD` secrets and add the credentials provided by Newspack for each.
 3. Checkout the repo locally and run `npm run setup` to install everything.
 4. Start developing!
