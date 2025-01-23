@@ -1,0 +1,26 @@
+{
+	"name": "wordpress-project-template",
+	"version": "0.1.0",
+	"description": "A starting point for WordPress projects",
+	"author": "Ryan Welcher",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"setup": "npm install --force && composer install",
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"format:js": "wp-scripts format",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start"
+	},
+	"prettier": "@wordpress/prettier-config",
+	"devDependencies": {
+		"@wordpress/scripts": "^23.1.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"prettier": "npm:wp-prettier@2.2.1-beta-1"
+	}
+}
