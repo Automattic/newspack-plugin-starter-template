@@ -7,18 +7,17 @@
 	"main": "build/index.js",
 	"scripts": {
 		"setup": "npm install && composer install",
+		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
+		"lint": "composer run lint && npm run lint:js && npm run lint:css",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
-		"lint:pkg-json": "wp-scripts lint-pkg-json",
-		"format:js": "wp-scripts format",
-		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start"
+		"prepare": "husky"
 	},
 	"prettier": "@wordpress/prettier-config",
 	"devDependencies": {
-		"@wordpress/scripts": "*"
+		"@wordpress/scripts": "*",
+		"husky": "^9.1.7"
 	}
 }
