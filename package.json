@@ -1,12 +1,12 @@
 {
-	"name": "wordpress-project-template",
-	"version": "0.1.0",
-	"description": "A starting point for WordPress projects",
-	"author": "Ryan Welcher",
+	"name": "starter-plugin",
+	"version": "1.0.0",
+	"description": "A starting point for custom plugins on the Newspack platform",
+	"author": "Publisher name",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"setup": "npm install --force && composer install",
+		"setup": "npm install && composer install",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
@@ -19,8 +19,6 @@
 	},
 	"prettier": "@wordpress/prettier-config",
 	"devDependencies": {
-		"@wordpress/scripts": "^23.1.0",
-		"eslint-plugin-prettier": "^4.0.0",
-		"prettier": "npm:wp-prettier@2.2.1-beta-1"
+		"@wordpress/scripts": "*"
 	}
 }
