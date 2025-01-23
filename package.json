@@ -12,7 +12,7 @@
 		"format": "wp-scripts format",
 		"lint": "composer run lint && npm run lint:js && npm run lint:css",
 		"lint:css": "wp-scripts lint-style -- --allow-empty-input",
-		"lint:js": "wp-scripts lint-js -- --no-error-on-unmatched-patter",
+		"lint:js": "wp-scripts lint-js",
 		"prepare": "husky"
 	},
 	"prettier": "@wordpress/prettier-config",
