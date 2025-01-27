@@ -3,7 +3,7 @@ name: Publish Website over SFTP
 on:
     workflow_dispatch:
     workflow_run:
-        workflows: ['Linting JavaScript, and CSS.']
+        workflows: ['Static Linting']
         types: [completed]
 
 jobs:
