@@ -1,0 +1,14 @@
+.gitignore
+*/.gitignore      # ignore files in sub directories
+*/.gitkeep
+.git-ftp-ignore
+.git-ftp-include
+.gitlab-ci.yml
+.github
+.husky
+node_modules
+.editorconfig
+.eslint
+.nvmrc
+package.json
+package-lock.json

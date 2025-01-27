@@ -1,4 +1,4 @@
-name: Publish Website over SFTP
+name: Deploy plugin
 
 on:
     workflow_dispatch:
