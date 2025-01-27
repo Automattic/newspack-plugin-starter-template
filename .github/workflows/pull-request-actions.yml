@@ -33,14 +33,10 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install dependencies
-              run: npm i
-            - name: Lint JavaScript files
-              run: npm run lint:js
-            - name: Lint CSS files
-              run: npm run lint:css
-            - name: Lint package.json files
-              run: npm run lint:pkg-json
+              run: npm ci
+            - name: Run the linting command
+              run: npm run lint
               env:
                   CI: true
 
-        name: Javascript, CSS, and package.json
+        name: Linting PHP, JavaScript, and CSS.
