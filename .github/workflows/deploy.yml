@@ -1,6 +1,10 @@
 name: Publish Website over SFTP
 
 on:
+    pull_request:
+    push:
+        branches:
+            - trunk
     workflow_dispatch:
     workflow_run:
         workflows: ['Static Linting']
