@@ -6,7 +6,7 @@ on:
         branches:
             - trunk
     workflow_run:
-        workflows: ['Static Linting']
+        workflows: ['Linting JavaScript, and CSS.']
         types: [completed]
 
 jobs:
