@@ -1,10 +1,6 @@
 name: Publish Website over SFTP
 
 on:
-    pull_request:
-    push:
-        branches:
-            - trunk
     workflow_run:
         workflows: ['Linting JavaScript, and CSS.']
         types: [completed]
