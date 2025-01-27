@@ -4,11 +4,12 @@
 .git-ftp-ignore
 .git-ftp-include
 .gitlab-ci.yml
-.github
-.husky
+.github/*
+.husky/*
 node_modules
 .editorconfig
-.eslint
+.eslintrc
+.eslintignore
 .nvmrc
 package.json
 package-lock.json
