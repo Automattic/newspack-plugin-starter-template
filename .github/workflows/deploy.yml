@@ -7,7 +7,17 @@ on:
             - completed
 
 jobs:
-    deploy:
+    FTP-Deploy-Action:
+        name: FTP-Deploy-Action
         runs-on: ubuntu-latest
+
         steps:
-            - run: echo "Second action successfully finished!"
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+            - name: FTP-Deploy-Action
+              uses: Automattic/FTP-Deploy-Action@3.1.2
+              with:
+                  ftp-server: ${{ secrets.SFTP_USER }}@sftp.wp.com/wp-content/plugins/custom-plugin/
+                  ftp-username: ${{ secrets.SFTP_USER }}
+                  ftp-password: ${{ secrets.SFTP_PASSWORD }}
