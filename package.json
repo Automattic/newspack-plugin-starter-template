@@ -11,8 +11,8 @@
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
 		"lint": "composer run lint && npm run lint:js && npm run lint:css",
-		"lint:css": "wp-scripts lint-style",
-		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style --allow-empty-input",
+		"lint:js": "wp-scripts lint-js --no-error-on-unmatched-pattern",
 		"prepare": "husky"
 	},
 	"prettier": "@wordpress/prettier-config",
