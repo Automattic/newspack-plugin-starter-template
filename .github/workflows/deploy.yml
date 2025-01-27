@@ -1,0 +1,17 @@
+name: Publish Website over SFTP
+
+on:
+	pull_request:
+	push:
+    branches:
+        - trunk
+on
+  workflow_run:
+    workflows: ['Static Linting']
+    types: [completed]
+jobs:
+	after:
+	  runs-on: ubuntu-latest
+    steps:
+		if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      - run: echo "Second action successfully finished!"
