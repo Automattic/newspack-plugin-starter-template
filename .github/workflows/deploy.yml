@@ -1,0 +1,13 @@
+name: Publish Website over SFTP
+
+on:
+    workflow_run:
+        workflows: ['Static Linting']
+        types:
+            - completed
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Second action successfully finished!"
