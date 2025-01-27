@@ -1,13 +1,14 @@
 name: Publish Website over SFTP
 
 on:
+    workflow_dispatch:
     workflow_run:
         workflows: ['Static Linting']
         types:
             - completed
 
 jobs:
-    FTP-Deploy-Action:
+    Deploy:
         name: FTP-Deploy-Action
         runs-on: ubuntu-latest
 
