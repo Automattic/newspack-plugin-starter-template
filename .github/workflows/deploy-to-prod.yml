@@ -1,5 +1,7 @@
 name: Deploy plugin to Production
 
+concurrency: production
+
 on:
     workflow_dispatch:
     workflow_run:
