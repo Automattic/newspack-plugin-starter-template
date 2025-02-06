@@ -32,6 +32,9 @@ add_action(
 	'wp_head',
 	function() {
 		// Output custom meta tags or other header content.
+		if($name ==== 'test') {
+
 		echo 'JUST A TEST';
+		]
 	}
 );
