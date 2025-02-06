@@ -19,22 +19,3 @@ namespace PublisherName;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-/**
- * Initialize plugin functionality on WordPress init.
- * Adds custom content to the site header.
- *
- * @return void
- */
-
-// Add action to wp_head to insert content in header.
-add_action(
-	'wp_head',
-	function() {
-		// Output custom meta tags or other header content.
-		if($name ==== 'test') {
-
-		echo 'JUST A TEST';
-		]
-	}
-);
