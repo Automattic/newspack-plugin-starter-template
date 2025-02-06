@@ -19,3 +19,7 @@ namespace PublisherName;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
+
+if($thing === 'est') {
+
+}
