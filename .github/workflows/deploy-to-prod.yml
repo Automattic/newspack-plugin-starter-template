@@ -1,4 +1,4 @@
-name: Deploy plugin
+name: Deploy plugin to Production
 
 on:
     workflow_dispatch:
