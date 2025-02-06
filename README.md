@@ -15,6 +15,15 @@ It will give you all of the tools you needs to get up and running quickly.
 ## How do I use it?
 
 1. Start by clicking the `Use this template` to use this as a starting point for your project.
-2. In the Secrets and Variables->Actions under the Settings menu of the new repository. Create new `SFTP_USER` and `SFTP_PASSWORD` secrets and add the credentials provided by Newspack for each.
+2. In the Secrets and Variables->Actions under the Settings menu of the new repository. Create new the secrets outline in the table below.
 3. Checkout the repo locally and run `npm run setup` to install everything.
 4. Start developing!
+
+### Secrets
+
+| Secret                | Description                                 |
+| --------------------- | ------------------------------------------- |
+| PROD_SFTP_USER        | The username for the Production SFTP server |
+| PROD_SFTP_PASSWORD    | The password for the Production SFTP server |
+| STAGING_SFTP_USER     | The username for the Staging SFTP server    |
+| STAGING_SFTP_PASSWORD | The password for the Staging SFTP server    |
