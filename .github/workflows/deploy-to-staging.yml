@@ -1,5 +1,7 @@
 name: Deploy plugin to Staging
 
+concurrency: staging
+
 on:
     push:
         branches:
