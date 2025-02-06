@@ -1,4 +1,4 @@
-name: Deploy plugin to Production
+name: Deploy plugin to Staging
 
 on:
     push:
