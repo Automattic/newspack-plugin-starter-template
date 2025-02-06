@@ -1,5 +1,7 @@
 name: Deploy plugin to Staging
 
+concurrency: staging
+
 on:
     push:
         branches:
@@ -7,10 +9,7 @@ on:
 
 jobs:
     Linting:
-        uses: ./.github/workflows/linting.yml
-        concurrency:
-            group: staging-deploy
-            cancel-in-progress: true
+
 
     Deploy:
         name: FTP-Deploy-Action
@@ -20,7 +19,11 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   fetch-depth: 2
+            - name: Linting
+              id: linting
+              uses: ./.github/workflows/linting.yml
             - name: FTP-Deploy-Action
+              if: steps.linting.outcome == 'success'
               uses: Automattic/FTP-Deploy-Action@3.1.2
               with:
                   ftp-server: sftp://sftp.wp.com/htdocs/wp-content/plugins/custom-plugin/
