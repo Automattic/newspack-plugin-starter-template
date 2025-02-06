@@ -8,6 +8,9 @@ on:
 jobs:
     Linting:
         uses: ./.github/workflows/linting.yml
+        concurrency:
+            group: staging-deploy
+            cancel-in-progress: true
 
     Deploy:
         name: FTP-Deploy-Action
