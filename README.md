@@ -21,9 +21,9 @@ It will give you all of the tools you needs to get up and running quickly.
 
 ### Secrets
 
-| Secret             | Description                                 |
-| ------------------ | ------------------------------------------- |
-| PROD_SFTP_USER     | The username for the Production SFTP server |
-| PROD_SFTP_PASSWORD | The password for the Production SFTP server |
-| STAGING_SFTP_USER  | The username for the Staging SFTP server    |
-| STAGING_SFTP_USER  | The password for the Staging SFTP server    |
+| Secret                | Description                                 |
+| --------------------- | ------------------------------------------- |
+| PROD_SFTP_USER        | The username for the Production SFTP server |
+| PROD_SFTP_PASSWORD    | The password for the Production SFTP server |
+| STAGING_SFTP_USER     | The username for the Staging SFTP server    |
+| STAGING_SFTP_PASSWORD | The password for the Staging SFTP server    |
