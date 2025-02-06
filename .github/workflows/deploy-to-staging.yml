@@ -1,0 +1,26 @@
+name: Deploy plugin to Staging
+
+on:
+    push:
+        branches:
+            - staging
+
+jobs:
+    Linting:
+        uses: ./.github/workflows/linting.yml
+
+    Deploy:
+        name: FTP-Deploy-Action
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+            - name: FTP-Deploy-Action
+              uses: Automattic/FTP-Deploy-Action@3.1.2
+              with:
+                  ftp-server: sftp://sftp.wp.com/htdocs/wp-content/plugins/custom-plugin/
+                  ftp-username: ${{ secrets.STAGING_SFTP_USER }}
+                  ftp-password: ${{ secrets.STAGING_SFTP_PASSWORD }}
+                  git-ftp-args: --insecure
