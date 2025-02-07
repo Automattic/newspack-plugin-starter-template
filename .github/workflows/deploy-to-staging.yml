@@ -3,6 +3,7 @@ name: Deploy plugin to Staging
 concurrency: staging
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - staging
