@@ -17,7 +17,7 @@
 	},
 	"lint-staged": {
 		"*.js": [
-			"wp-scripts lint-js --ignore-pattern 'public/**/*.js' --ignore-pattern 'build/**/*.js'"
+			"wp-scripts lint-js --ignore-pattern 'build/**/*.js'"
 		],
 		"*.php": [
 			"composer run lint"
