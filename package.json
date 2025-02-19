@@ -6,7 +6,7 @@
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"setup": "npm install && composer install && npx husky init && echo \"npm run lint\" > .husky/pre-commit",
+		"setup": "npm install && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
@@ -15,9 +15,21 @@
 		"lint:js": "wp-scripts lint-js --no-error-on-unmatched-pattern",
 		"prepare": "husky"
 	},
+	"lint-staged": {
+		"*.js": [
+			"wp-scripts lint-js --ignore-pattern 'build/**/*.js'"
+		],
+		"*.php": [
+			"composer run lint"
+		],
+		"*.scss": [
+			"wp-scripts lint-style"
+		]
+	},
 	"prettier": "@wordpress/prettier-config",
 	"devDependencies": {
 		"@wordpress/scripts": "*",
-		"husky": "^9.1.7"
+		"husky": "^9.1.7",
+		"lint-staged": "^13.2.0"
 	}
 }
