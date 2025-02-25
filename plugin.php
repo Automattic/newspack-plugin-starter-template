@@ -19,3 +19,7 @@ namespace PublisherName;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
+
+require_once 'vendor/autoload.php';
+
+Module_Loader::init();

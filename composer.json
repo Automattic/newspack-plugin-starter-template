@@ -10,7 +10,15 @@
 	"scripts": {
 		"lint": "./vendor/bin/phpcs --standard=phpcs.xml"
 	},
+	"autoload": {
+		"classmap": [
+			"./inc"
+		]
+	},
 	"config": {
+		"platform": {
+			"php": "8.0"
+		},
         "allow-plugins": {
             "squizlabs/php_codesniffer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
