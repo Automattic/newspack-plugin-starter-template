@@ -2,7 +2,7 @@
 /**
  * Admin Panel Notice.
  *
- * @package Newspack
+ * @package PublisherName
  */
 
 namespace PublisherName\SampleModule;
@@ -20,7 +20,7 @@ class Admin_Panel_Notice {
 	 * @return void
 	 */
 	public static function init() {
-		add_action( 'admin_bar_menu', [__CLASS__, 'add_notice'], 999 );
+		add_action( 'admin_bar_menu', [ __CLASS__, 'add_notice' ], 999 );
 	}
 
 	/**
@@ -36,5 +36,4 @@ class Admin_Panel_Notice {
 		);
 		$wp_admin_bar->add_node( $args );
 	}
-
 }

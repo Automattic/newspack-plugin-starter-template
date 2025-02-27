@@ -1,7 +1,10 @@
 <?php
 /**
  * This file will be automatically loaded when the module is active.
+ *
+ * @package PublisherName
  */
+
 namespace PublisherName\SampleModule;
 
 /**

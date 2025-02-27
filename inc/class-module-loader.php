@@ -1,6 +1,8 @@
 <?php
 /**
  * Module Loader
+ *
+ * @package PublisherName
  */
 
 namespace PublisherName;
@@ -14,6 +16,11 @@ class Module_Loader {
 
 	const MODULES_OPTION_NAME = __NAMESPACE__ . '-modules';
 
+	/**
+	 * Initialize the class
+	 *
+	 * @return void
+	 */
 	public static function init() {
 
 		add_action( 'admin_menu', [ __CLASS__, 'add_admin_menu' ] );
@@ -43,7 +50,7 @@ class Module_Loader {
 	 * @return array
 	 */
 	public static function add_allowed_options( $options ) {
-		$options['custom-modules'] = [self::MODULES_OPTION_NAME];
+		$options['custom-modules'] = [ self::MODULES_OPTION_NAME ];
 		return $options;
 	}
 
@@ -68,7 +75,7 @@ class Module_Loader {
 				<input type="hidden" name="action" value="update">
 				<table class="form-table" role="presentation">
 					<tbody>
-						<?php foreach( $available_modules as $module ): ?>
+						<?php foreach ( $available_modules as $module ) : ?>
 							<?php $checked = in_array( $module['path'], $current_active_modules, true ) ? 'checked' : ''; ?>
 							<tr>
 								<th scope="row"><?php echo esc_html( $module['name'] ); ?></th>
@@ -78,7 +85,7 @@ class Module_Loader {
 											<span><?php echo esc_html( $module['name'] ); ?></span>
 										</legend>
 										<label for="<?php echo esc_attr( $module['slug'] ); ?>">
-											<input name="<?php echo esc_attr( self::MODULES_OPTION_NAME ); ?>[]" type="checkbox" value="<?php echo esc_attr( $module['path'] ); ?>" <?php echo $checked; ?>>
+											<input name="<?php echo esc_attr( self::MODULES_OPTION_NAME ); ?>[]" type="checkbox" value="<?php echo esc_attr( $module['path'] ); ?>" <?php echo esc_attr( $checked ); ?>>
 											Enabled
 										</label>
 										<p class="description">
@@ -113,16 +120,16 @@ class Module_Loader {
 			$module_file = $modules_dir . '/' . $dir . '/module.php';
 			if ( file_exists( $module_file ) ) {
 				$modules[ $dir ] = [
-					'slug' => $dir,
-					'path' => $module_file,
-					'name' => $dir,
+					'slug'        => $dir,
+					'path'        => $module_file,
+					'name'        => $dir,
 					'description' => '',
 				];
 			}
 
 			$info_file = $modules_dir . '/' . $dir . '/info.json';
 			if ( file_exists( $info_file ) ) {
-				$info = json_decode( file_get_contents( $info_file ), true );
+				$info = json_decode( file_get_contents( $info_file ), true ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 				if ( ! empty( $info['name'] ) ) {
 					$modules[ $dir ]['name'] = $info['name'];
 				}
