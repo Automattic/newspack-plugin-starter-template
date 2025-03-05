@@ -1,5 +1,5 @@
 {
-	"name": "publisher-name/project-name",
+	"name": "publisher-name/custom-plugin",
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"squizlabs/php_codesniffer": "^3.6",
@@ -13,17 +13,17 @@
 	"autoload": {
 		"classmap": [
 			"./inc"
-		]
-	    "files" :[]
+		],
+		"files": []
 	},
 	"config": {
 		"platform": {
 			"php": "8.0"
 		},
-        "allow-plugins": {
-            "squizlabs/php_codesniffer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "wp-coding-standards/wpcs": true
-        }
-    }
+		"allow-plugins": {
+			"squizlabs/php_codesniffer": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"wp-coding-standards/wpcs": true
+		}
+	}
 }

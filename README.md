@@ -71,9 +71,9 @@ git checkout -b staging
 git push origin staging
 ```
 
-### Add your own namespace
+### Search and replace to add your name to the plugin
 
-Do a search and replace in all files for `PublisherName` with a camel case slug of your publication.
+Do a search and replace in all files for `PublisherName`, `publisher-name` and `Publisher Name` and replace them with the name of your site in the same format. Example: `MySite`, `my-site` and `My Site`.
 
 ### Optional: create modules
 
@@ -85,7 +85,7 @@ Here are some benefits of developing each feature or small tweak as an independe
 * Documentation: By using modules, you are documenting what you have and avoid getting to a state that nobody even remembers everything that the plugin does
 * Enable/disable modules: The ability to enable and disable modules per site.
 
-To create a module, add a new folder under the `modules` folder and add a `module.php` file to it. Optionally, but recommended, add a `info.json` file with a name and a description for the module. 
+To create a module, add a new folder under the `modules` folder and add a `module.php` file to it. Optionally, but recommended, add a `info.json` file with a name and a description for the module.
 
 See the provided `sample` module and use it as a starting point.
 
