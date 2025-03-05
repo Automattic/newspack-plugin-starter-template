@@ -15,14 +15,14 @@ It will give you all of the tools you needs to get up and running quickly.
 
 ## How do I use it?
 
-1. Start by clicking the `Use this template` button to create a new repository in your own GitHub account from this template.
-2. In the Secrets and Variables->Actions sections under the Settings menu of the new repository. Create new the secrets outlined in the table below.
-3. In the Settings->Branches section of the new repository, set the branch protection rules to require a pull request to trunk, an approved review, and status checks to pass before merging.
-4. In Settings->Collaborators and teams section of the new repository, add the Newspack team as a collaborators with write access. You may need to add them individually and you can get their usernames from the Newspack team.
-5. Checkout the repo locally and run `npm run setup` to install everything.
-6. Do a search and replace for `PublisherName` with a camel case slug of your publication.
-7. In it doesn't already exist, create and `staging` branch and push it to the remote repository.
-8. Start developing!
+### Creating a new repository from this template
+
+Click the `Use this template` button to create a new repository in your own GitHub account from this template.
+
+### Setting up the repository secrets
+
+Go to the Secrets and Variables->Actions sections under the Settings menu of the new repository.
+Under the Repository secrets sections, create new the secrets outlined in the table below.
 
 ### Secrets
 
@@ -32,3 +32,60 @@ It will give you all of the tools you needs to get up and running quickly.
 | PROD_SFTP_PASSWORD    | The password for the Production SFTP server |
 | STAGING_SFTP_USER     | The username for the Staging SFTP server    |
 | STAGING_SFTP_PASSWORD | The password for the Staging SFTP server    |
+
+### Adding some branch protection rules
+
+1. Navigate to Settings > Branches.
+2. Click on **Add classic branch protection rule**
+3. Enter `trunk` into the Branch name pattern field.
+4. Check **Require a pull request before merging**.
+5. Check **Require approvals**. You can leave the number of required approval set at 1.
+6. Click on **Create**.
+7. Check Require status checks to pass before merging
+8. In the search box, searching for “Linting” and add each status check that appears. There should be 3 in total.
+
+## Adding collaborators
+
+In Settings->Collaborators and teams section of the new repository, add the Newspack team as a collaborators with write access.
+You may need to add them individually and you can get their usernames from the Newspack team.
+
+### Checking out the repo locally
+
+Checkout the repo locally and run `npm run setup` to install everything.
+
+```bash
+git clone <your-repo-url>
+
+cd <your-repo-name>
+
+npm run setup
+```
+
+### Create the staging branch
+
+In it doesn't already exist, create and `staging` branch and push it to the remote repository.
+
+```bash
+git checkout -b staging
+
+git push origin staging
+```
+
+### Add your own namespace
+
+Do a search and replace in all files for `PublisherName` with a camel case slug of your publication.
+
+### Optional: create modules
+
+We strongly suggest that you use the provided Modules framework to organize your code. Overtime, your custom plugin can grow and house several different features and tweaks, and it's a good idea to keep things organized so anyone can easily navigate through the code.
+
+Here are some benefits of developing each feature or small tweak as an independent module:
+
+* Code organization: easy to see what you have and to find what you're looking for
+* Documentation: By using modules, you are documenting what you have and avoid getting to a state that nobody even remembers everything that the plugin does
+* Enable/disable modules: The ability to enable and disable modules per site.
+
+To create a module, add a new folder under the `modules` folder and add a `module.php` file to it. Optionally, but recommended, add a `info.json` file with a name and a description for the module. 
+
+See the provided `sample` module and use it as a starting point.
+
