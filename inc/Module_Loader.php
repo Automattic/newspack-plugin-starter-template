@@ -110,7 +110,7 @@ class Module_Loader {
 	 * @return array
 	 */
 	private static function get_available_modules() {
-		$modules_dir = __DIR__ . '/modules';
+		$modules_dir = __DIR__ . '/Modules';
 		$dirs = scandir( $modules_dir );
 		$modules = [];
 		foreach ( $dirs as $dir ) {
