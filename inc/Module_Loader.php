@@ -148,9 +148,11 @@ class Module_Loader {
 	 */
 	public static function load_modules() {
 		$active_modules = get_option( self::MODULES_OPTION_NAME, [] );
-		foreach ( $active_modules as $module ) {
-			if ( file_exists( $module ) ) {
-				require_once $module;
+		if ( ! empty( $active_modules ) ) {
+			foreach ( $active_modules as $module ) {
+				if ( file_exists( $module ) ) {
+					require_once $module;
+				}
 			}
 		}
 	}

@@ -5,7 +5,7 @@
  * @package PublisherName
  */
 
-namespace PublisherName\SampleModule;
+namespace PublisherName\Modules\Sample;
 
 defined( 'ABSPATH' ) || exit;
 

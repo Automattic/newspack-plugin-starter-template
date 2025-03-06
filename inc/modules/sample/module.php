@@ -5,7 +5,7 @@
  * @package PublisherName
  */
 
-namespace PublisherName\SampleModule;
+namespace PublisherName\Modules\Sample;
 
 /**
  * Here you can have code doing stuff. Just remember to always perform actions in a hook callback and never in the global scope.

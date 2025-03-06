@@ -11,9 +11,9 @@
 		"lint": "./vendor/bin/phpcs --standard=phpcs.xml"
 	},
 	"autoload": {
-		"classmap": [
-			"./inc"
-		],
+		"psr-4": {
+			"PublisherName\\": "inc/"
+		},
 		"files": []
 	},
 	"config": {
