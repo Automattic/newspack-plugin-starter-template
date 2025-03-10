@@ -37,6 +37,26 @@
 		<type>warning</type>
 		<message>%s is uncached, please use it with caution.</message>
 	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post_link">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post_link">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_adjacent_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
 	<!-- end of overrides -->
 
 
