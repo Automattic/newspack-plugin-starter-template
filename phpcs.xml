@@ -4,15 +4,8 @@
 
 	<rule ref="WordPress-Extra" />
 	<rule ref="WordPress-Docs" />
-	<rule ref="WordPress-VIP-Go">
-		<exclude name="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid" />
-	</rule>
-
+	<rule ref="WordPress-VIP-Go"/>
 	<!-- Override some rules from WordPressVIPMinimum that call for VIP functions not available on the Newspack platform. -->
-	<!--
 	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts">
 		<type>warning</type>
 		<message>%s is uncached, please use it with caution.</message>
@@ -23,10 +16,16 @@
 	</rule>
 	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid">
 		<type>warning</type>
-		<message>%s() is uncached, please use it with caution.</message>
+			<message>%s() is uncached, please use it with caution.</message>
 	</rule>
-	-->
+	<rule ref="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<!-- end of overrides -->
 
+
+	<!-- Standard WordPress sniffs -->
 	<rule ref="WordPress">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
@@ -40,6 +39,8 @@
 		<!-- Allow for PSR-4 file names-->
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<!-- Format inline comments how ever you want -->
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 	</rule>
 
 	<rule ref="PHPCompatibilityWP"/>
