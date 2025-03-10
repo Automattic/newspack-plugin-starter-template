@@ -8,7 +8,7 @@
 		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
-		"lint": "./vendor/bin/phpcs --standard=phpcs.xml"
+		"lint": "./vendor/bin/phpcs --standard=phpcs.xml -n"
 	},
 	"autoload": {
 		"psr-4": {
