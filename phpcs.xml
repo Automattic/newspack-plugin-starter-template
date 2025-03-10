@@ -4,15 +4,11 @@
 
 	<rule ref="WordPress-Extra" />
 	<rule ref="WordPress-Docs" />
-	<rule ref="WordPress-VIP-Go">
-		<exclude name="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid" />
+	<rule ref="WordPress-VIP-Go" >
+		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get" />
 	</rule>
 
 	<!-- Override some rules from WordPressVIPMinimum that call for VIP functions not available on the Newspack platform. -->
-	<!--
 	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts">
 		<type>warning</type>
 		<message>%s is uncached, please use it with caution.</message>
@@ -23,10 +19,48 @@
 	</rule>
 	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid">
 		<type>warning</type>
-		<message>%s() is uncached, please use it with caution.</message>
+			<message>%s() is uncached, please use it with caution.</message>
 	</rule>
-	-->
+	<rule ref="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.OrderByRand.orderby_orderby">
+		<type>warning</type>
+		<message>The %s parameter can be slow, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.custom_role_add_role">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.wp_old_slug_redirect_wp_old_slug_redirect">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post_link">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post_link">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_adjacent_post">
+		<type>warning</type>
+		<message>%s is uncached, please use it with caution.</message>
+	</rule>
+	<!-- end of overrides -->
 
+
+	<!-- Standard WordPress sniffs -->
 	<rule ref="WordPress">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
@@ -40,6 +74,8 @@
 		<!-- Allow for PSR-4 file names-->
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<!-- Format inline comments how ever you want -->
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 	</rule>
 
 	<rule ref="PHPCompatibilityWP"/>
