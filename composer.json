@@ -8,6 +8,14 @@
 		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
+		"build": [
+			"composer update --no-dev",
+			"composer dump-autoload -o --no-dev"
+		],
+		"dev": [
+			"composer update",
+			"composer dump-autoload"
+		],
 		"lint": "./vendor/bin/phpcs --standard=phpcs.xml -n"
 	},
 	"autoload": {
