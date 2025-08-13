@@ -95,8 +95,7 @@ class Module_Loader {
 								</td>
 							</tr>
 						<?php endforeach; ?>
-					<tbody>
-
+					</tbody>
 				</table>
 				<?php submit_button(); ?>
 			</form>
