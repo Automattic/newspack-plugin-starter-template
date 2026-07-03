@@ -1,6 +1,6 @@
 # Copilot instructions for Newspack custom plugins
 
-This is a custom WordPress plugin for the Newspack platform. Its code runs on live publisher production sites, so weight security, correctness, and performance accordingly.
+This is a custom WordPress plugin for the Newspack platform. Its code runs on live publisher production sites, so weigh security, correctness, and performance accordingly.
 
 ## Codebase context
 
