@@ -9,7 +9,7 @@ It will give you all of the tools you need to get up and running quickly.
 2. A PHP CodeSniffer configuration that will check your code against the coding standards that are recommended by the Newspack team.
 3. A [Prettier](https://prettier.io/) configuration for WordPress.
 4. A [Husky](https://typicode.github.io/husky/) configuration to lint local file changes before they are committed.
-5. A GitHub action to check that your commits and merges adhere to the correct coding standards.
+5. A GitHub action to lint PHP, JavaScript, and CSS against the configured coding standards.
 6. A repository-level GitHub Copilot instructions file to guide Copilot code review toward Newspack, WordPress, security, performance, and deployment concerns.
 7. A GitHub action to automatically deploy your changes to the production environment when pushing to the `release` branch.
 8. A GitHub action to automatically deploy your changes to the staging environment when pushing to the `alpha` branch.
