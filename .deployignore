@@ -1,0 +1,33 @@
+# .deployignore — paths that must NOT ship into the deployed plugin directory.
+# Consumed by the deploy workflows via `rsync --exclude-from=.deployignore`.
+# Syntax is rsync's filter format: a bare name (no slash) matches at any depth;
+# whole-line comments start with '#'. Compiled build/ and vendor/ are present on
+# disk after the build/composer steps and DO ship (they're not listed here).
+
+# Repo / VCS metadata
+.git
+.gitignore
+.gitkeep
+
+# CI + editor/lint tooling (not needed at runtime)
+.github
+.husky
+.editorconfig
+.eslintrc
+.eslintignore
+.nvmrc
+.gitlab-ci.yml
+
+# Legacy git-ftp deploy files (superseded by these workflows) + this file itself
+.git-ftp-ignore
+.git-ftp-include
+.deployignore
+
+# Node/Composer inputs & lockfiles (sources/inputs don't ship; built output does)
+node_modules
+package.json
+package-lock.json
+composer.lock
+
+# OS cruft
+.DS_Store
