@@ -17,13 +17,24 @@ jobs:
         uses: ./.github/workflows/linting.yml
 
     Deploy:
-        name: FTP-Deploy-Action
+        name: Deploy (SFTP key auth)
         runs-on: ubuntu-latest
         needs: [Linting]
+        timeout-minutes: 15
         env:
           PLUGIN_DEST: /htdocs/wp-content/plugins/custom-plugin
-          PLUGIN_SOURCE: /htdocs/wp-content/uploads/custom-plugin__new
+          # Staging dir is a SIBLING of the live plugin under plugins/, so the
+          # cutover is a same-directory rename (fast, reliable, tiny window) —
+          # no download/re-upload, and rollback is a rename back.
+          PLUGIN_SOURCE: /htdocs/wp-content/plugins/custom-plugin__new
           PLUGIN_BACKUP: /htdocs/wp-content/plugins/custom-plugin__bak
+          # SSH options shared by every lftp connection: authenticate with the
+          # deploy key only, never fall back to an interactive prompt, and bound
+          # the connect so a failed auth errors out quickly instead of hanging.
+          # Host-key pinning is intentionally not used: sftp.wp.com is a gateway
+          # pool whose nodes can present different host keys, so pinning one would
+          # fail intermittently.
+          SSH_OPTS: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o ConnectTimeout=30"
         if: ${{ vars.PROD_SITES != '' }}
         strategy:
             matrix:
@@ -56,40 +67,77 @@ jobs:
             - name: Install Composer dependencies
               run: composer install --no-dev --optimize-autoloader
 
-            - name: Ensure remote directory exists
+            # Write the SFTP private key (dedicated deploy key, not a personal
+            # one) to a file outside the repo, readable only by the runner user.
+            - name: Write SSH deploy key
+              env:
+                DEPLOY_KEY: ${{ secrets[format('PROD_SFTP_KEY_{0}', matrix.site_name)] }}
+              run: |
+                printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/deploy_key"
+                chmod 600 "$RUNNER_TEMP/deploy_key"
+
+            # Stage exactly what should ship as the plugin. Exclusions live in
+            # .deployignore at the repo root (rsync-native, single source of truth).
+            - name: Stage plugin files for upload
+              run: |
+                rm -rf "$RUNNER_TEMP/plugin-stage"
+                mkdir -p "$RUNNER_TEMP/plugin-stage"
+                rsync -a --exclude-from=.deployignore ./ "$RUNNER_TEMP/plugin-stage/"
+
+            # Upload the staged plugin into the sibling staging dir. --delete makes
+            # the remote match the source, clearing any leftover from a prior run.
+            - name: Upload plugin to staging directory
+              env:
+                SFTP_USER: ${{ secrets[format('PROD_SFTP_USER_{0}', matrix.site_name)] }}
               run: |
                 sudo apt-get update -qq && sudo apt-get install -y -qq lftp
                 lftp -c "
-                  set sftp:connect-program 'ssh -o StrictHostKeyChecking=no'
+                  set sftp:connect-program 'ssh -i $RUNNER_TEMP/deploy_key -l $SFTP_USER $SSH_OPTS'
                   set cmd:interactive no
-                  open -u ${{ secrets[format('PROD_SFTP_USER_{0}', matrix.site_name)] }},${{ secrets[format('PROD_SFTP_PASSWORD_{0}', matrix.site_name)] }} sftp://sftp.wp.com
-                  cd /htdocs/wp-content/uploads
-                  mkdir custom-plugin__new
-                  quit
+                  set net:timeout 30
+                  set net:max-retries 2
+                  open -u $SFTP_USER, sftp://sftp.wp.com
+                  rm -rf $PLUGIN_SOURCE
+                  mirror -R --delete $RUNNER_TEMP/plugin-stage/ $PLUGIN_SOURCE
+                  bye
                 "
 
-            - name: FTP-Deploy-Action to a new folder ${{ matrix.site_name }}
-              uses: Automattic/FTP-Deploy-Action@3.1.2
-              with:
-                  ftp-server: sftp://sftp.wp.com${{ env.PLUGIN_SOURCE }}
-                  ftp-username: ${{ secrets[format('PROD_SFTP_USER_{0}', matrix.site_name)] }}
-                  ftp-password: ${{ secrets[format('PROD_SFTP_PASSWORD_{0}', matrix.site_name)] }}
-                  git-ftp-args: --insecure
-
-            - name: Atomic swap directories
+            # Cut over with same-directory renames and roll back on failure, so a
+            # failed/timed-out promote can never leave the live plugin missing.
+            - name: Promote staged plugin (atomic rename + rollback)
+              env:
+                SFTP_USER: ${{ secrets[format('PROD_SFTP_USER_{0}', matrix.site_name)] }}
               run: |
                 sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-                LFTP_OPEN="set sftp:connect-program 'ssh -o StrictHostKeyChecking=no'; set cmd:interactive no; open -u ${{ secrets[format('PROD_SFTP_USER_{0}', matrix.site_name)] }},${{ secrets[format('PROD_SFTP_PASSWORD_{0}', matrix.site_name)] }} sftp://sftp.wp.com"
-                # Move existing plugin to backup (no-op on first deploy)
-                lftp -c "$LFTP_OPEN; mv $PLUGIN_DEST $PLUGIN_BACKUP; quit" || true
-                # Copy uploads dir to plugin dir via runner (mv often fails across remote dirs on SFTP)
-                lftp -c "
-                  $LFTP_OPEN
-                  lcd /tmp
-                  mirror $PLUGIN_SOURCE plugin-deploy
-                  mirror -R plugin-deploy $PLUGIN_DEST
-                  rm -rf $PLUGIN_SOURCE
-                  quit
-                "
-                # Remove backup (ignore error)
-                lftp -c "$LFTP_OPEN; rm -rf $PLUGIN_BACKUP; quit" || true
+                OPEN="set sftp:connect-program 'ssh -i $RUNNER_TEMP/deploy_key -l $SFTP_USER $SSH_OPTS'; set cmd:interactive no; set net:timeout 30; set net:max-retries 2; open -u $SFTP_USER, sftp://sftp.wp.com"
+                lf() { lftp -c "$OPEN; $1; bye"; }
+
+                # 0. Clear any stale backup from a previous failed run.
+                lf "rm -rf $PLUGIN_BACKUP" || true
+
+                # 1. Back up the live plugin IF it exists (first deploy has none).
+                #    Existence is checked explicitly so we never mask a real error.
+                BACKED_UP=0
+                if lf "cd $PLUGIN_DEST"; then
+                  lf "mv $PLUGIN_DEST $PLUGIN_BACKUP" || { echo "::error::could not back up existing plugin"; exit 1; }
+                  BACKED_UP=1
+                fi
+
+                # 2. Promote the staged dir into place (same-directory rename).
+                if ! lf "mv $PLUGIN_SOURCE $PLUGIN_DEST"; then
+                  echo "::error::promote failed"
+                  if [ "$BACKED_UP" = 1 ]; then
+                    echo "restoring backup"
+                    lf "rm -rf $PLUGIN_DEST" || true
+                    lf "mv $PLUGIN_BACKUP $PLUGIN_DEST" \
+                      || echo "::error::ROLLBACK FAILED — live plugin dir is missing, restore manually"
+                  fi
+                  exit 1
+                fi
+
+                # 3. Success — drop the backup.
+                lf "rm -rf $PLUGIN_BACKUP" || true
+
+            - name: Remove deploy key
+              if: always()
+              run: rm -f "$RUNNER_TEMP/deploy_key"
