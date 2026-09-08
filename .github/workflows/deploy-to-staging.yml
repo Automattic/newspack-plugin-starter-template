@@ -57,12 +57,18 @@ jobs:
               run: composer install --no-dev --optimize-autoloader
 
             - name: Ensure remote directory exists
+              # Generated SFTP passwords can contain characters that lftp -c treats as
+              # command syntax. Passing the password through the environment keeps it
+              # out of the parsed command text.
+              env:
+                  SFTP_USER: ${{ secrets[format('STAGING_SFTP_USER_{0}', matrix.site_name)] }}
+                  LFTP_PASSWORD: ${{ secrets[format('STAGING_SFTP_PASSWORD_{0}', matrix.site_name)] }}
               run: |
                 sudo apt-get update -qq && sudo apt-get install -y -qq lftp
                 lftp -c "
                   set sftp:connect-program 'ssh -o StrictHostKeyChecking=no'
                   set cmd:interactive no
-                  open -u ${{ secrets[format('STAGING_SFTP_USER_{0}', matrix.site_name)] }},${{ secrets[format('STAGING_SFTP_PASSWORD_{0}', matrix.site_name)] }} sftp://sftp.wp.com
+                  open --env-password -u $SFTP_USER sftp://sftp.wp.com
                   cd /htdocs/wp-content/uploads
                   mkdir custom-plugin__new
                   quit
@@ -77,9 +83,15 @@ jobs:
                   git-ftp-args: --insecure
 
             - name: Atomic swap directories
+              # Generated SFTP passwords can contain characters that lftp -c treats as
+              # command syntax. Passing the password through the environment keeps it
+              # out of the parsed command text.
+              env:
+                  SFTP_USER: ${{ secrets[format('STAGING_SFTP_USER_{0}', matrix.site_name)] }}
+                  LFTP_PASSWORD: ${{ secrets[format('STAGING_SFTP_PASSWORD_{0}', matrix.site_name)] }}
               run: |
                 sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-                LFTP_OPEN="set sftp:connect-program 'ssh -o StrictHostKeyChecking=no'; set cmd:interactive no; open -u ${{ secrets[format('STAGING_SFTP_USER_{0}', matrix.site_name)] }},${{ secrets[format('STAGING_SFTP_PASSWORD_{0}', matrix.site_name)] }} sftp://sftp.wp.com"
+                LFTP_OPEN="set sftp:connect-program 'ssh -o StrictHostKeyChecking=no'; set cmd:interactive no; open --env-password -u $SFTP_USER sftp://sftp.wp.com"
                 # Move existing plugin to backup (no-op on first deploy)
                 lftp -c "$LFTP_OPEN; mv $PLUGIN_DEST $PLUGIN_BACKUP; quit" || true
                 # Copy uploads dir to plugin dir via runner (mv often fails across remote dirs on SFTP)
