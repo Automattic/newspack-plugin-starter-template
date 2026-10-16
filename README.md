@@ -11,8 +11,9 @@ It will give you all of the tools you need to get up and running quickly.
 4. A [Husky](https://typicode.github.io/husky/) configuration to lint local file changes before they are committed.
 5. A GitHub action to lint PHP, JavaScript, and CSS against the configured coding standards.
 6. A repository-level GitHub Copilot instructions file to guide Copilot code review toward Newspack, WordPress, security, performance, and deployment concerns.
-7. A GitHub action to automatically deploy your changes to the production environment when pushing to the `release` branch.
-8. A GitHub action to automatically deploy your changes to the staging environment when pushing to the `alpha` branch.
+7. An `AGENTS.md` file with instructions for AI coding agents and developers writing custom features, covering the module structure, security and performance rules, coding standards, and the deploy model.
+8. A GitHub action to automatically deploy your changes to the production environment when pushing to the `release` branch.
+9. A GitHub action to automatically deploy your changes to the staging environment when pushing to the `alpha` branch.
 
 ## How do I use it?
 
